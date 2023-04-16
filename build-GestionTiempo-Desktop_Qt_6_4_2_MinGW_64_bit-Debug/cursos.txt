@@ -1,0 +1,46 @@
+2536101-0-0-4-3-Descubriendo la Fisica
+2555131-4-0-0-3-Calculo Diferencial
+2555101-4-0-0-3-Algebra y Trigonometria
+2555121-4-0-0-3-Geometria Vectorial y Analitica
+2598511-4-3-0-4-Informatica I
+2538101-4-0-0-1-Ingles I
+2537101-2-0-0-1-Vivamos la Universidad
+2536201-4-0-0-3-Fisica Mecanica
+2555231-4-0-0-3-Calculo Integral
+2555221-4-0-0-3-Algebra Lineal
+2598522-0-0-2-1-Introducción a la Ingenieria Electronica
+2598521-4-3-0-4-Informatica II
+2538201-4-0-0-1-Ingles II
+2539101-4-0-0-3-Lecto-escritura
+2536302-4-0-0-3-Fisica de Ondas
+2555331-4-0-0-3-Calculo Vectorial
+2598531-4-0-0-3-Ecuaciones Diferenciales
+2598532-4-3-0-4-Circuitos Electricos
+2599431-4-0-0-3-Probabilidad y Estadistica
+2538301-4-0-0-3-Ingles III
+2517362-2-0-0-1-Formacion Ciudadana y Constitucional
+2536311-4-0-0-3-Fisica de campos
+2598541-4-0-0-3-Matematicas especiales
+2598544-4-0-0-3-Metodos Numericos
+2538542-4-3-0-4-Circuitos Electricos II
+2598543-4-0-0-3-Matematicas Discretas
+2538401-4-0-0-1-Ingles IV
+2536502-0-6-0-2-Laboratorio Integrado de Fisica
+2598554-4-0-0-3-Electro-Magnetismo
+2598551-4-0-0-3-Fisica del estado solido
+2598552-4-3-0-4-Electronica Analogica I
+2598553-4-3-0-4-Electronica Digital I
+2538501-4-0-0-1-Ingles V
+2598563-4-3-0-4-Sistemas de Control Continuo
+2599461-4-3-0-4-Tratamineto de señales
+2598561-4-3-0-4-Electronica Analogica II
+2598562-4-3-0-4-Electronica Digital II
+2538601-4-0-0-1-Ingles VI
+2598574-4-3-0-4-Maquinas electricas
+2598572-4-3-0-4-Tratamineto de señales II
+2598573-4-3-0-4-Acondicionamiento de Señales
+2598571-4-3-0-4-Electronica Digital III
+2598581-4-3-0-4-Electronica de Potencia
+2599475-4-3-0-4-Procesamiento de Señales
+2599462-4-0-0-3-Redes de Computadores I
+2598591-0-0-2-1-Seminiario Ingenieria Electronica

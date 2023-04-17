@@ -7,5 +7,7 @@
 using namespace std;
 
 char* leerarchivo(char *nombrearchivo);
+bool buscardocumento(int documento);
+
 
 #endif // LIB1_H

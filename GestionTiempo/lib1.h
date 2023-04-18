@@ -8,6 +8,8 @@ using namespace std;
 
 char* leerarchivo(char *nombrearchivo);
 bool buscardocumento(int documento);
+bool registrarestudiante(int documento);
+int creditosmateria(int codigo);
 
 
 #endif // LIB1_H

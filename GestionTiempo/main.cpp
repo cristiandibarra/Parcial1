@@ -29,96 +29,28 @@ int main()
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    int opcion=0;
+    int cedula=0;
 
-    /*
-    ofstream archivo("estudiantes.txt", ios::app);
-    int documento=0;
-    int codigo=0;
-    int creditos=0;
-    int tipoc=0;
-    int hora=0;
-    char* dias;
-    dias = new char[2];
-    bool estado=true;
+    cout << "BIENVENIDO AL SISTEMA DE GESTION DEL TIEMPO PARA ESTUDIANTES DE INGENIERIA ELECTRONICA :)" << endl << endl;
+    cout << "Por favor selecciona la opcion:" << endl;
+    cout << "[1] Gestionar mi tiempo" << endl << "[2] Registrarme en el sistema." << endl << endl;
+    cin >> opcion;
 
-    cout << "Ingrese el numero de documento: ";
-    cin >> documento;
+    switch(opcion){
+    case 1:
 
-    if (archivo.is_open()){
-        archivo << '\n';
-        archivo << documento;
-        archivo << '-';
-        cout << "Registra tu primera materia: " << endl << endl;
+    break;
 
-        while(estado){
-            cout << "Ingresa el codigo de la materia: ";
-            cin >> codigo;
-            cout << endl;
-            archivo << codigo;
-            archivo << '(';
+    case 2:
+        cout << "Ingrese su numero de documento: ";
+        cin >> cedula;
 
-            cout << "Cuantos creditos tiene la materia?: ";
-            cin >> creditos;
-
-            if(creditos==1 || creditos==3){
-                cout << "El curso es de 2 o 4 horas?: ";
-                cin >> tipoc;
-                cout << endl;
-
-                *(dias)='_';
-                *(dias+1)='_';
-                *(dias+2)='\0';
-
-                if(tipoc==2){
-                    cout << "Ingrese el dia en que matriculó el curso: ";
-                    cin >> *(dias);
-                    cout << endl;
-                    archivo << *(dias);
-                }
-                else if(tipoc==4){
-                    cout << "Ingrese los días en que matriculo los cursos: ";
-                    cin >> *(dias) >> *(dias+1);
-                    cout << endl;
-                    for(int i=0; i<2; i++) archivo << *(dias+i);
-                }
-                archivo << '[';
-
-                cout << "Ingrese la hora de inicio de clase: ";
-                cin >> hora;
-                archivo << hora;
-                archivo << ']';
-                archivo << ')';
-
-                cout << "Desea registrar otra materia?    0(NO)    1(SI)";
-                cin >> estado;
-            }
-            else if(creditos==4){
-
-            }
-        }
-
-    } else{
-            cout << "No se pudo abrir el archivo." << endl;
+        if(registrarestudiante(cedula)) cout << "Registro exitoso!" << endl << endl;;
+    break;
     }
 
-    archivo.close();
 
-
-    delete[] dias;
-    */
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    int documento=0;
-    bool existe=false;
-    cout << "Ingrese el numero de documento: ";
-    cin >> documento;
-    cout << endl;
-
-    existe=buscardocumento(documento);
-    if(existe) cout << "El documento esta registrado!" << endl << endl;
-    else cout << "El documento no exixte." << endl << endl;
 
 
 

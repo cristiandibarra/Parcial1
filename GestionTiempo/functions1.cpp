@@ -5,7 +5,7 @@ char* leerarchivo(char *nombrearchivo){
     ifstream archivo(nombrearchivo);
 
     if (!archivo.is_open()) {
-            cout << "No se pudo abrir el archivo" << endl;
+            cout << "No fue posible abrir el archivo." << endl;
             return NULL;
     }
 
@@ -30,7 +30,7 @@ bool buscardocumento(int documento){
     ifstream archivo("estudiantes.txt");
 
     if (!archivo.is_open()) {
-        cout << "Error al abrir el archivo." << endl;
+        cout << "No fue posible abrir el archivo." << endl;
         return 1;
     }
 
@@ -39,8 +39,10 @@ bool buscardocumento(int documento){
             aux = *(linea + (j))-48;
             cedula=(cedula*10)+aux;
         }
-        if(documento==cedula) return true;
-
+        if(documento==cedula) {
+            delete[] linea;
+            return true;
+        }
         cedula=0;
 
     }
@@ -49,85 +51,31 @@ bool buscardocumento(int documento){
     delete[] linea;
     return false;
 }
-bool registrarestudiante(int documento){
-    ofstream archivo("estudiantes.txt", ios::app);
-    int codigo=0;
-    int creditos=0;
-    int hora=0;
-    char* dias;
-    dias = new char[2];
-    bool estado=true;
 
-    if(buscardocumento(documento)) {
-        cout << "El documento ya esta registrado!" << endl << endl;
-        return false;
-    }
-
-
-    if (archivo.is_open()){
-        archivo << '\n';
-        archivo << documento;
-        archivo << '-';
-        cout << "Registra tu primera materia: " << endl << endl;
-
-        while(estado){
-            cout << "Ingresa el codigo de la materia: ";
-            cin >> codigo;
-            cout << endl;
-            archivo << codigo;
-            archivo << '(';
-
-            creditos=creditosmateria(codigo);
-            cout << "Esta materia tiene " << creditos << " creditos." << endl;
-
-            if(creditos==3){
-                cout << endl;
-
-                *(dias)='_';
-                *(dias+1)='_';
-                *(dias+2)='\0';
-
-                cout << "Ingrese los días en que matriculo los cursos: ";
-                cin >> *(dias) >> *(dias+1);
-                cout << endl;
-                for(int i=0; i<2; i++) archivo << *(dias+i);
-
-                archivo << '[';
-
-                cout << "Ingrese la hora de inicio de clase: ";
-                cin >> hora;
-                archivo << hora;
-                archivo << ']';
-                archivo << ')';
-
-                cout << "Desea registrar otra materia?    0(NO)    1(SI)";
-                cin >> estado;
-            }
-            else if(creditos==4){
-
-            }
-        }
-
-    } else{
-            cout << "No se pudo abrir el archivo." << endl;
-    }
-
-    archivo.close();
-
-    return true;
-}
 
 int creditosmateria(int codigo){
-    int codigo2=0;
+
     int creditos=0;
+    char* linea;
+    linea = informacioncurso(codigo);
+
+    creditos=*(linea+14)-48;
+
+    delete[] linea;
+    return creditos;
+
+}
+
+char* informacioncurso(int codigo){
+    int codigo2=0;
     int aux=0;
     char* linea;
     linea = new char[60];
     ifstream archivo("cursos.txt");
 
     if (!archivo.is_open()) {
-        cout << "Error al abrir el archivo." << endl;
-        return 1;
+        cout << "No fue posible abrir el archivo." << endl;
+        return NULL;
     }
 
     while (archivo.getline(linea, 61)) {
@@ -135,14 +83,133 @@ int creditosmateria(int codigo){
             aux = *(linea + (j))-48;
             codigo2=(codigo2*10)+aux;
         }
-        if(codigo==codigo2) creditos=*(linea + 14)-48;
+        if(codigo==codigo2) return linea;
 
         codigo2=0;
 
     }
 
-    archivo.close();
+    return NULL;
+}
+
+int ht_materia(int codigo){
+    int ht=0;
+
+    char* linea;
+    linea = informacioncurso(codigo);
+
+    ht=*(linea+8)-48;
+
     delete[] linea;
-    return creditos;
+    return ht;
+
+}
+
+int hp_materia(int codigo){
+    int hp=0;
+
+    char* linea;
+    linea = informacioncurso(codigo);
+
+    hp=*(linea+10)-48;
+
+    delete[] linea;
+    return hp;
+
+}
+
+int htp_materia(int codigo){
+    int htp=0;
+
+    char* linea;
+    linea = informacioncurso(codigo);
+
+    htp=*(linea+12)-48;
+
+    delete[] linea;
+    return htp;
+
+}
+
+char* nombremateria(int codigo){
+    char* linea;
+    linea = informacioncurso(codigo);
+    char* nombre;
+    nombre = new char[44];
+
+    for(int i=16; i<60; i++) *(nombre+(i-16))=*(linea+i);
+
+    return nombre;
+}
+
+bool registrarmateria4(int codigo, char* dias, int hora1, char dia, int hora2){
+    ofstream archivo("estudiantes.txt", ios::app);
+
+    if (!archivo.is_open()) {
+        cout << "No fue posible abrir el archivo." << endl;
+        return false;
+    }
+
+    archivo << '-';
+    archivo << codigo;
+    archivo << '(';
+
+    for(int i=0; i<2; i++) archivo << *(dias+i);
+
+    archivo << '[';
+    archivo << hora1;
+    archivo << ']';
+    archivo << dia;
+    archivo << '[';
+    archivo << hora2;
+    archivo << ']';
+    archivo << ')';
+
+    return true;
+}
+
+bool registrarmateria3(int codigo, char* dias, int hora){
+    ofstream archivo("estudiantes.txt", ios::app);
+
+    if (!archivo.is_open()) {
+        cout << "No fue posible abrir el archivo." << endl;
+        return false;
+    }
+
+    archivo << '-';
+    archivo << codigo;
+    archivo << '(';
+
+    for(int i=0; i<2; i++) archivo << *(dias+i);
+
+    archivo << '[';
+    archivo << hora;
+    archivo << ']';
+    archivo << ')';
+
+    return true;
+}
+
+bool registrardocumeto(int documento){
+
+    ofstream archivo("estudiantes.txt", ios::app);
+
+    if (!archivo.is_open()) {
+        cout << "No fue posible abrir el archivo." << endl;
+        return false;
+    }
+    archivo << '\n';
+    archivo << documento;
+
+    return true;
+}
+
+void imprimircurso(int codigo){
+
+    cout << "Curso: " << nombremateria(codigo) << endl;
+    cout << "Horas de teoria: " << ht_materia(codigo) << endl;
+    cout << "Horas de practica: " << hp_materia(codigo) << endl;
+    cout << "Horas teorico-practicas: " << htp_materia(codigo) << endl;
+    cout << "Creditos: " << creditosmateria(codigo) << endl << endl;
 
 }

@@ -22,7 +22,7 @@ char* leerarchivo(char *nombrearchivo){
     return contenido;
 }
 
-bool buscardocumento(int documento){
+char* buscardocumento(int documento){
     int cedula=0;
     int aux=0;
     char* linea;
@@ -31,7 +31,7 @@ bool buscardocumento(int documento){
 
     if (!archivo.is_open()) {
         cout << "No fue posible abrir el archivo." << endl;
-        return 1;
+        return "";
     }
 
     while (archivo.getline(linea, 151)) {
@@ -40,8 +40,7 @@ bool buscardocumento(int documento){
             cedula=(cedula*10)+aux;
         }
         if(documento==cedula) {
-            delete[] linea;
-            return true;
+            return linea;
         }
         cedula=0;
 
@@ -49,7 +48,7 @@ bool buscardocumento(int documento){
 
     archivo.close();
     delete[] linea;
-    return false;
+    return "";
 }
 
 
@@ -137,6 +136,8 @@ char* nombremateria(int codigo){
     char* nombre;
     nombre = new char[44];
 
+    if(codigo==0) return "";
+
     for(int i=16; i<60; i++) *(nombre+(i-16))=*(linea+i);
 
     return nombre;
@@ -212,4 +213,127 @@ void imprimircurso(int codigo){
     cout << "Horas teorico-practicas: " << htp_materia(codigo) << endl;
     cout << "Creditos: " << creditosmateria(codigo) << endl << endl;
 
+}
+
+void imprimirhorario(int** horario){
+
+    //char* shortname;
+    //shortname=new char[10];
+    //*(shortname+8)=' ';
+    //*(shortname+10)='\0';
+
+    cout << "\t";
+    for(int k=0; k<7; k++){ 
+        cout << diachar(k) << "\t";
+        //cout << "\t";
+    }
+
+    cout << endl << endl;
+
+    for(int i=0; i<16; i++){
+
+        for(int j=0; j<7; j++){
+
+            if(j==0)cout << i+6 << ":00 \t";
+            char* nombre;
+            if(horario[j][i]>0) nombre=nombremateria(horario[j][i]);
+            else if(horario[j][i]<0) nombre=nombremateria((horario[j][i])*(-1));
+            else nombre="";
+            if(horario[j][i]>0){
+                for(int l=0; l<4; l++) cout << nombre[l];
+                cout << " C\t";
+            }
+            else if(horario[j][i]<0){
+                for(int l=0; l<4; l++) cout << nombre[l];
+                cout << " R\t\t";
+            }
+
+            else cout << "-\t";
+            //cout << "\t" << i+6 << ":00 \t";
+            //cout << "\t";
+        }
+        cout << endl;
+    }
+    //delete[] materia;
+}
+
+int** obtenerhorario(int documento){
+    int d1=0;
+    int hora=0;
+    char dia=' ';
+    int codigo=0, creditos=0;
+    int i=0;
+    int aux=0;
+    int** horario=new int*[7];
+    for (int i = 0; i < 7; i++) *(horario+i) = new int[16];
+
+    for(int n=0; n<7; n++) for(int m=0; m<16; m++) horario[n][m]=0;
+
+    char* informacionestudiante;
+    informacionestudiante=buscardocumento(documento);
+
+    while(*(informacionestudiante + i)!='\n'){
+        if(*(informacionestudiante + i)=='-'){
+            for(int j=1; j<8; j++){
+                aux=*(informacionestudiante + i + j)-48;
+                codigo=codigo*10+aux;
+            }
+            creditos=creditosmateria(codigo);
+
+            dia=*(informacionestudiante+(i+9));
+            d1=diaentero(dia);
+            hora=*(informacionestudiante+(i+12))-48;
+            if(*(informacionestudiante+(i+13))!=']') hora=hora*10+(*(informacionestudiante+(i+13))-48);
+
+            horario[d1][hora]=codigo;
+            horario[d1][hora+1]=codigo;
+
+            dia=*(informacionestudiante+(i+10));
+            d1=diaentero(dia);
+
+            horario[d1][hora]=codigo;
+            horario[d1][hora+1]=codigo;
+
+            if(creditos==4){
+                dia=*(informacionestudiante+(i+14));
+                d1=diaentero(dia);
+                horario[d1][hora]=codigo;
+                horario[d1][hora+1]=codigo;
+                horario[d1][hora+2]=codigo;
+            }
+            codigo=0;
+            i+=2;
+        }
+
+        i++;
+    }
+    delete[] informacionestudiante;
+    return horario;
+}
+
+int diaentero(char dia){
+    int ndia=0;
+
+    if(dia=='L') ndia=0;
+    else if(dia=='M') ndia=1;
+    else if(dia=='W') ndia=2;
+    else if(dia=='J') ndia=3;
+    else if(dia=='V') ndia=4;
+    else if(dia=='S') ndia=5;
+    else if(dia=='D') ndia=6;
+
+    return ndia;
+}
+
+char* diachar(int dia){
+    char* diac;
+    if(dia==0)diac="Lun";
+    else if(dia==1)diac="Mar";
+    else if(dia==2)diac="Mie";
+    else if(dia==3)diac="Jue";
+    else if(dia==4)diac="Vie";
+    else if(dia==5)diac="Sab";
+    else if(dia==6)diac="Dom";
+
+    return diac;
 }

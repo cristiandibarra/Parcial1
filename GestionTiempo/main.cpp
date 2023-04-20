@@ -10,6 +10,7 @@ int main()
     int codigo=0;
 
 
+    /*
     cout << "BIENVENIDO AL SISTEMA DE GESTION DEL TIEMPO PARA ESTUDIANTES DE INGENIERIA ELECTRONICA :)" << endl << endl;
     cout << "Por favor selecciona la opcion:" << endl;
     cout << "[1] Gestionar mi tiempo" << endl << "[2] Registrarme en el sistema." << endl << endl;
@@ -27,6 +28,13 @@ int main()
         cout << "[1] Gestionar manualmente." << endl << "[2] Permitir que el sistema genere de forma alearotia." << "[3] Reiniciar matricula." << endl << endl;
         //cin >>selector;
 
+        int** horario=new int*[7];
+        for (int i = 0; i < 7; i++) {
+            *(horario+i) = new int[15];
+        }
+        cout << "Tu horario es: ";
+
+        delete[] horario;
     break;
 
     case 2:
@@ -36,7 +44,7 @@ int main()
 
         bool estado=true;
 
-        if(buscardocumento(cedula)){
+        if(buscardocumento(cedula)!=""){
             cout << "El documento ya se encuentra registrado. Intente nuevamamente." << endl << endl;
             return 0;
         }
@@ -100,10 +108,13 @@ int main()
     break;
 
     }
+    */
+    //imprimirhorario(1018374996);
+    int**horario;
+    horario=obtenerhorario(1018374996);
+    imprimirhorario(horario);
 
-
-
-
+    delete[] horario;
 
     return 0;
 }

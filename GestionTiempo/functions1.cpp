@@ -1,55 +1,5 @@
 #include <lib1.h>
 
-char* leerarchivo(char *nombrearchivo){
-
-    ifstream archivo(nombrearchivo);
-
-    if (!archivo.is_open()) {
-            cout << "No fue posible abrir el archivo." << endl;
-            return NULL;
-    }
-
-    archivo.seekg(0, ios::end);
-    int tamanio = archivo.tellg();
-    archivo.seekg(0, ios::beg);
-
-    char* contenido = new char[tamanio];
-
-    archivo.read(contenido, tamanio);
-
-    archivo.close();
-
-    return contenido;
-}
-
-char* buscardocumento(int documento){
-    int cedula=0;
-    int aux=0;
-    char* linea;
-    linea = new char[150];
-    ifstream archivo("estudiantes.txt");
-
-    if (!archivo.is_open()) {
-        cout << "No fue posible abrir el archivo." << endl;
-        return "";
-    }
-
-    while (archivo.getline(linea, 151)) {
-        for(int j=0; j<10; j++){
-            aux = *(linea + (j))-48;
-            cedula=(cedula*10)+aux;
-        }
-        if(documento==cedula) {
-            return linea;
-        }
-        cedula=0;
-
-    }
-
-    archivo.close();
-    delete[] linea;
-    return "";
-}
 
 
 int creditosmateria(int codigo){
@@ -143,67 +93,9 @@ char* nombremateria(int codigo){
     return nombre;
 }
 
-bool registrarmateria4(int codigo, char* dias, int hora1, char dia, int hora2){
-    ofstream archivo("estudiantes.txt", ios::app);
 
-    if (!archivo.is_open()) {
-        cout << "No fue posible abrir el archivo." << endl;
-        return false;
-    }
 
-    archivo << '-';
-    archivo << codigo;
-    archivo << '(';
 
-    for(int i=0; i<2; i++) archivo << *(dias+i);
-
-    archivo << '[';
-    archivo << hora1;
-    archivo << ']';
-    archivo << dia;
-    archivo << '[';
-    archivo << hora2;
-    archivo << ']';
-    archivo << ')';
-
-    return true;
-}
-
-bool registrarmateria3(int codigo, char* dias, int hora){
-    ofstream archivo("estudiantes.txt", ios::app);
-
-    if (!archivo.is_open()) {
-        cout << "No fue posible abrir el archivo." << endl;
-        return false;
-    }
-
-    archivo << '-';
-    archivo << codigo;
-    archivo << '(';
-
-    for(int i=0; i<2; i++) archivo << *(dias+i);
-
-    archivo << '[';
-    archivo << hora;
-    archivo << ']';
-    archivo << ')';
-
-    return true;
-}
-
-bool registrardocumeto(int documento){
-
-    ofstream archivo("estudiantes.txt", ios::app);
-
-    if (!archivo.is_open()) {
-        cout << "No fue posible abrir el archivo." << endl;
-        return false;
-    }
-    archivo << '\n';
-    archivo << documento;
-
-    return true;
-}
 
 void imprimircurso(int codigo){
 
@@ -277,14 +169,14 @@ int** obtenerhorario(int documento){
             hora=*(informacionestudiante+(i+12))-48;
             if(*(informacionestudiante+(i+13))!=']') hora=hora*10+(*(informacionestudiante+(i+13))-48);
 
-            horario[d1][hora]=codigo;
-            horario[d1][hora+1]=codigo;
+            horario[d1][hora-6]=codigo;
+            horario[d1][hora-5]=codigo;
 
             dia=*(informacionestudiante+(i+10));
             d1=diaentero(dia);
 
-            horario[d1][hora]=codigo;
-            horario[d1][hora+1]=codigo;
+            horario[d1][hora-6]=codigo;
+            horario[d1][hora-5]=codigo;
 
             if(creditos==4){
                 dia=*(informacionestudiante+(i+14));

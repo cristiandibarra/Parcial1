@@ -5,7 +5,9 @@ CONFIG -= qt
 
 SOURCES += \
         functions1.cpp \
+        functions2.cpp \
         main.cpp
 
 HEADERS += \
-    lib1.h
+    lib1.h \
+    registro.h

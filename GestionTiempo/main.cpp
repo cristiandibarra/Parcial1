@@ -9,35 +9,95 @@ int main()
     int cedula=0;
     int codigo=0;
 
-
-    /*
     cout << "BIENVENIDO AL SISTEMA DE GESTION DEL TIEMPO PARA ESTUDIANTES DE INGENIERIA ELECTRONICA :)" << endl << endl;
     cout << "Por favor selecciona la opcion:" << endl;
     cout << "[1] Gestionar mi tiempo" << endl << "[2] Registrarme en el sistema." << endl << endl;
     cin >> opcion;
+    cout << endl;
+
 
     switch(opcion){
-    case 1:
-
-        //int selector=0;
+    case 1:{
 
         cout << "Ingrese su numero de documento: ";
         cin >> cedula;
 
         cout << "Ingresa la opcion: " << endl << endl;
-        cout << "[1] Gestionar manualmente." << endl << "[2] Permitir que el sistema genere de forma alearotia." << "[3] Reiniciar matricula." << endl << endl;
+        cout << "[1] Gestionar manualmente." << endl << "[2] Permitir que el sistema genere de forma alearotia." << endl << endl;
         //cin >>selector;
 
-        int** horario=new int*[7];
-        for (int i = 0; i < 7; i++) {
-            *(horario+i) = new int[15];
-        }
-        cout << "Tu horario es: ";
+        int** horario=obtenerhorario(cedula);
+        int* lista;
+        int nmaterias=0;
+        int tiempo=0;
+        bool state=true;
+        int n=0;
+        int d=0;
+        int h=0;
 
+        cout << "Tu horario es: " << endl << endl;
+        imprimirhorario(horario);
+
+        cout << endl << endl;
+        cout << "Actualmente tienes: " << cantidadmaterias(cedula) << " materias matriculadas." << endl;
+        cout << "Necesitas estudiar: " << endl << endl;
+
+        lista=listamaterias(cedula);
+        nmaterias=cantidadmaterias(cedula);
+
+        for(int i=0; i<nmaterias; i++){
+            tiempo=((creditosmateria(*(lista+i))*48)/16)-(cantidadhorasmateria(*(lista+i), horario));
+            cout << i+1 << ". " << nombremateria(*(lista+i)) << " " << tiempo << " horas." << endl;
+        }
+
+        cout << endl << endl;
+
+        while(state){
+            cout << "Por favor ingresa el numero de la materia para incluirla en el horario de repaso: " << endl;
+            for(int k=0; k<nmaterias; k++){
+                cout << "[" << k+1 << "] " << nombremateria(*(lista+k)) << "." << endl;
+            }
+            cin >> n;
+            cout << endl << endl;
+            cout << "Selecciona el dia: " << endl << endl;
+            for(int j=0; j<7; j++){
+                cout << j+1 << ". " << diachar(j) << endl;
+            }
+            cin >> d;
+            cout << endl << endl;
+            cout << "Selecciona la hora (de 6 a 21): " << endl << endl;
+            cin >> h;
+
+            if(horario[d-1][h-1]!=0) cout << "Espacio ocupado." << endl;
+            else horario[d-1][h-6]=*(lista+n-1)*-1;
+
+            cout << endl << "Tu horario queda: " << endl;
+            imprimirhorario(horario);
+
+            cout << "Necesitas estudiar: " << endl << endl;
+
+            lista=listamaterias(cedula);
+            nmaterias=cantidadmaterias(cedula);
+
+            for(int i=0; i<nmaterias; i++){
+                tiempo=((creditosmateria(*(lista+i))*48)/16)-(cantidadhorasmateria(*(lista+i), horario));
+                cout << i+1 << ". " << nombremateria(*(lista+i)) << " " << tiempo << " horas." << endl;
+            }
+
+            for(int i=0; i<nmaterias; i++){
+                tiempo=((creditosmateria(*(lista+i))*48)/16)-(cantidadhorasmateria(*(lista+i), horario));
+                if(tiempo==0) state=false;
+                else state=true;
+            }
+        }
+
+        delete[] lista;
         delete[] horario;
+    }
+
     break;
 
-    case 2:
+    case 2:{
 
         cout << "Ingrese su numero de documento: ";
         cin >> cedula;
@@ -104,17 +164,11 @@ int main()
         }
 
 
-
+    }
     break;
 
     }
-    */
-    //imprimirhorario(1018374996);
-    int**horario;
-    horario=obtenerhorario(1018374996);
-    imprimirhorario(horario);
 
-    delete[] horario;
 
     return 0;
 }

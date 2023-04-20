@@ -22,6 +22,9 @@ void imprimirhorario(int** horario);
 int diaentero(char dia);
 int** obtenerhorario(int documento);
 char* diachar(int dia);
+int cantidadmaterias(int documento);
+int* listamaterias(int documento);
+int cantidadhorasmateria(int codigo, int** horario);
 
 
 

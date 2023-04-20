@@ -217,11 +217,6 @@ void imprimircurso(int codigo){
 
 void imprimirhorario(int** horario){
 
-    //char* shortname;
-    //shortname=new char[10];
-    //*(shortname+8)=' ';
-    //*(shortname+10)='\0';
-
     cout << "\t";
     for(int k=0; k<7; k++){ 
         cout << diachar(k) << "\t";
@@ -249,12 +244,9 @@ void imprimirhorario(int** horario){
             }
 
             else cout << "-\t";
-            //cout << "\t" << i+6 << ":00 \t";
-            //cout << "\t";
         }
         cout << endl;
     }
-    //delete[] materia;
 }
 
 int** obtenerhorario(int documento){
@@ -336,4 +328,63 @@ char* diachar(int dia){
     else if(dia==6)diac="Dom";
 
     return diac;
+}
+
+int cantidadmaterias(int documento){
+    int cont=0;
+    int cantm=0;
+    char* linea;
+    linea = buscardocumento(documento);
+
+    while(*(linea+cont)!='\0'){
+        if(*(linea+cont)=='-') cantm++;
+        cont++;
+    }
+
+    delete[] linea;
+    return cantm;
+}
+
+int* listamaterias(int documento){
+    int aux=0;
+    int codigo=0;
+    int cont=0;
+    int cont2=0;
+    char* linea;
+    linea=buscardocumento(documento);
+    int nmaterias=cantidadmaterias(documento);
+    int* lista;
+    lista=new int[nmaterias];
+    for(int k=0; k<nmaterias; k++) *(lista+k)=0;
+
+    while(*(linea+cont)!='\0'){
+        if(*(linea+cont)=='-'){
+            for(int i=0; i<7; i++){
+                aux=*(linea+(cont+i+1))-48;
+                codigo=codigo*10+aux;
+            }
+            *(lista+cont2)=codigo;
+            cont2++;
+            codigo=0;
+        }
+
+        cont++;
+    }
+
+    return lista;
+}
+
+int cantidadhorasmateria(int codigo, int** horario){
+    int cantidad=0;
+    int cod=0;
+
+    for(int i=0; i<7; i++){
+        for(int j=0; j<16; j++){
+            cod=horario[i][j];
+            if(cod<0) cod=cod*(-1);
+            if(cod==codigo) cantidad++;
+        }
+    }
+
+    return cantidad;
 }
